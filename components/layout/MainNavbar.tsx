@@ -6,6 +6,8 @@ import { ModeToggle } from '../ToggleDarkMode';
 import Link from 'next/link';
 import { cn } from "@/lib/utils"
 import { usePathname } from 'next/navigation'
+import { MainNavItemsConstant } from '@/constants'
+
 export default function MainNavbar() {
   const scrolled = useScroll(20);
   return (
@@ -24,34 +26,6 @@ export default function MainNavbar() {
   )
 }
 
-const navItems = [
-  {
-    id: 1,
-    title : "Home",
-    path : '/'
-  },
-  {
-    id: 2,
-    title : "Blog",
-    path : '/blog'
-  },
-  {
-    id: 3,
-    title : "Project",
-    path : '/project'
-  },
-  {
-    id: 4,
-    title : "Library",
-    path : '/library'
-  },
-  {
-    id: 5,
-    title : "About",
-    path : '/about'
-  },
-]
-
 export function MainNavItem({
   className,
   ...props
@@ -62,7 +36,7 @@ export function MainNavItem({
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      {navItems.map(item =>(
+      {MainNavItemsConstant.map(item =>(
         <Link
           key={item.id}
           href={item.path}
