@@ -1,15 +1,8 @@
+import React from 'react'
+import ShortPost from '@/components/blog/ShortPost'
 import Section from '@/components/shared/Section'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import React from 'react'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
 export default function Layout({children} : {children : React.ReactNode}) {
   return (
@@ -34,24 +27,5 @@ export default function Layout({children} : {children : React.ReactNode}) {
           </div>
         {children}
     </Section>
-  )
-}
-
-
-const ShortPost = () => {
-  return (
-    <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Short blog" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem value="apple">Latest Posts</SelectItem>
-          <SelectItem value="banana">Newest Posts</SelectItem>
-          <SelectItem value="blueberry">Most popular posts</SelectItem>
-          <SelectItem value="grapes">By like count</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
   )
 }
