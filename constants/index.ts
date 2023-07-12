@@ -24,6 +24,11 @@ const MainNavItemsConstant = [
       title : "About",
       path : '/about'
     },
+    {
+      id: 6,
+      title : "Editor",
+      path : '/editor'
+    },
   ]
 
 export {

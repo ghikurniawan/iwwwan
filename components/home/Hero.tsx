@@ -1,6 +1,6 @@
 import React from "react";
 import Section from "../shared/Section";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import {
   GitHubLogoIcon,
   IdCardIcon,
