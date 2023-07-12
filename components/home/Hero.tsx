@@ -1,6 +1,6 @@
 import React from "react";
 import Section from "../shared/Section";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import {
   GitHubLogoIcon,
   IdCardIcon,
@@ -33,51 +33,32 @@ const Hero = () => {
         <div className="flex gap-4 my-4">
           <div className="group relative">
             <div className="absolute -inset-0.5 animate-pulse rounded blur bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600 opacity-75 transition duration-1000 group-hover:opacity-100 group-hover:duration-1000" />
-            <Link href={'#intro'}>
-              <Button
-                className="relative lg:text-xl font-bold bg-background hover:bg-background hover:border-accent-pink/80 hover:scale-105 transition-transform"
-                variant={"outline"}
-              >
-                Read the blog
-              </Button>
+            <Link href={'#intro'} className={`h-9 px-4 py-2 inline-flex items-center justify-center rounded-md text-sm relative lg:text-xl font-bold bg-background hover:bg-background hover:border-accent-pink/80 hover:scale-105 transition-transform`}>
+              Read the blog
             </Link>
           </div>
-          <Link href={'/about'} aria-label="About me button">
             <Button
+              asChild
               className="lg:text-xl font-bold bg-background hover:bg-background hover:scale-105 transition-transform"
               variant={"outline"}
             >
-              Learn more about me
+              <Link href={'/about'} aria-label="About me button">
+                  Learn more about me
+              </Link>
             </Button>
-          </Link>
         </div>
-        <div className="flex w-full max-w-2xl">
-          <Link href={"/"}>
-            <Button
-              variant={"ghost"}
-              className="group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background"
-            >
+        <div className="flex w-full max-w-2xl gap-2">
+          <Link href={"/"} className={`inline-flex hover:text-primary items-center justify-center px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background`}>
               <IdCardIcon className="mr-2 w-5 h-5" />
               Resume
-            </Button>
           </Link>
-          <Link href={"/"}>
-            <Button
-              variant={"ghost"}
-              className="group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background"
-            >
-              <TwitterLogoIcon className="mr-2 w-5 h-5" />
+          <Link href={"/"} className={`inline-flex hover:text-primary items-center justify-center px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background`}>
+            <TwitterLogoIcon className="mr-2 w-5 h-5" />
               @iwwwan
-            </Button>
           </Link>
-          <Link href={"/"}>
-            <Button
-              variant={"ghost"}
-              className="group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background"
-            >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
+          <Link href={"/"} className={`inline-flex hover:text-primary items-center justify-center px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background`}>
+            <GitHubLogoIcon className="mr-2 w-5 h-5" />
               @ghiwwwan
-            </Button>
           </Link>
         </div>
       </article>
