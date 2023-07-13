@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
@@ -15,5 +17,5 @@ declare module 'next-auth/adapters' {
       id: string;
       username: string;
       role: string;
-    };
+    }
 }
