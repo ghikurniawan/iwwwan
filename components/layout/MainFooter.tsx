@@ -1,8 +1,13 @@
+"use client"
+
 import React from "react";
 import { MainNavItem } from "./MainNavbar";
 import { EnvelopeClosedIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const MainFooter = () => {
+  const {data : session} = useSession()
   const date = new Date().getFullYear();
   return (
     <footer className="p-4 border-t w-full">
@@ -16,7 +21,12 @@ const MainFooter = () => {
         </div>
         <div>iwwwan</div>
         <div className="text-sm text-muted-foreground">
-          &copy; Copyright Iwwwan {date}
+          &copy; Copyright Iwwwan {date} &nbsp;
+          {! session && (
+            <Link href={'/auth/signin'}>
+              {`>>`}
+            </Link>
+          )}
         </div>
       </div>
     </footer>

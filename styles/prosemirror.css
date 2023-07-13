@@ -116,3 +116,21 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
 .tippy-box {
   max-width: 400px !important;
 }
+
+
+.color {
+  white-space: nowrap;
+
+  &::before {
+    background-color: var(--color);
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 2px;
+    content: " ";
+    display: inline-block;
+    height: 1em;
+    margin-bottom: 0.15em;
+    margin-right: 0.1em;
+    vertical-align: middle;
+    width: 1em;
+  }
+}

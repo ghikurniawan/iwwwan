@@ -7,8 +7,12 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { MainNavItemsConstant } from "@/constants";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "../ui/button";
+import { ExitIcon } from "@radix-ui/react-icons";
 
 export default function MainNavbar() {
+  const {data : session} = useSession()
   const scrolled = useScroll(20);
   return (
     <>
@@ -20,7 +24,14 @@ export default function MainNavbar() {
         {/* <div className="w-full h-2 bg-gradient-to-r from-green-500 to-cyan-500"/> */}
         <div className="max-w-screen-xl px-4 w-full h-full mx-auto flex justify-between items-center">
           <MainNavItem />
-          <ModeToggle />
+          <div className="flex gap-2">
+            {session && (
+              <Button variant="outline" size="icon" onClick={() => signOut()}>
+              <ExitIcon />
+              </Button>
+            )}
+            <ModeToggle />
+          </div>
         </div>
       </nav>
     </>
