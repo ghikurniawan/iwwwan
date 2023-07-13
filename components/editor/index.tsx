@@ -12,6 +12,23 @@ import va from "@vercel/analytics";
 import DEFAULT_EDITOR_CONTENT from "./default-content";
 import { EditorBubbleMenu } from "./components";
 import { getPrevText } from "@/lib/editor";
+import { ScrollArea } from "../ui/scroll-area";
+
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  // MenubarCheckboxItem,
+  // MenubarRadioGroup,
+  // MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
 
 export default function Editor() {
   const [content, setContent] = useLocalStorage(
@@ -21,6 +38,8 @@ export default function Editor() {
   const [saveStatus, setSaveStatus] = useState("Saved");
 
   const [hydrated, setHydrated] = useState(false);
+
+  const [canEdit, setCanEdit] = useState(true)
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     const json = editor.getJSON();
@@ -130,18 +149,87 @@ export default function Editor() {
     }
   }, [editor, content, hydrated]);
 
+  useEffect(() => {
+    editor?.setEditable(canEdit)
+  }, [editor, canEdit]);
+
   return (
     <div
-      onClick={() => {
-        editor?.chain().focus().run();
-      }}
-      className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg"
+      className="min-h-[500px] w-full max-w-screen-xl border p-4 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
     >
-      <div className="absolute right-5 top-5 mb-5 rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400">
-        {saveStatus}
+      <div className="flex justify-between items-center">
+        <Menubar>
+          <MenubarMenu>
+            <MenubarTrigger>File</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem onClick={()=>{
+                setCanEdit(false)
+              }}>
+                Publish
+              </MenubarItem>
+              <MenubarItem onClick={()=>{
+                setCanEdit(true)
+              }}>
+                Edit
+              </MenubarItem>
+              {/* <MenubarSeparator />
+              <MenubarSub>
+                <MenubarSubTrigger>Share</MenubarSubTrigger>
+                <MenubarSubContent>
+                  <MenubarItem>Email link</MenubarItem>
+                  <MenubarItem>Messages</MenubarItem>
+                  <MenubarItem>Notes</MenubarItem>
+                </MenubarSubContent>
+              </MenubarSub>
+              <MenubarSeparator />
+              <MenubarItem>
+                Print... <MenubarShortcut>⌘P</MenubarShortcut>
+              </MenubarItem> */}
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Edit</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+              </MenubarItem>
+              <MenubarItem>
+                Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarSub>
+                <MenubarSubTrigger>Find</MenubarSubTrigger>
+                <MenubarSubContent>
+                  <MenubarItem>Search the web</MenubarItem>
+                  <MenubarSeparator />
+                  <MenubarItem>Find...</MenubarItem>
+                  <MenubarItem>Find Next</MenubarItem>
+                  <MenubarItem>Find Previous</MenubarItem>
+                </MenubarSubContent>
+              </MenubarSub>
+              <MenubarSeparator />
+              <MenubarItem>Cut</MenubarItem>
+              <MenubarItem>Copy</MenubarItem>
+              <MenubarItem>Paste</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+
+        <div className={`text-muted-foreground px-2 py-1 text-sm rounded-lg ${saveStatus === 'Saved' ? "border-green-600 border text-green-600" : ""}`}>
+          {saveStatus}
+        </div>
       </div>
-      {editor && <EditorBubbleMenu editor={editor} />}
-      <EditorContent editor={editor} />
+
+      <ScrollArea 
+        onClick={() => {
+          editor?.chain().focus().run();
+        }}
+        className="h-[70vh] w-full mt-2 rounded-md border p-2"
+      >
+          {editor && <EditorBubbleMenu editor={editor} />}
+          <EditorContent editor={editor} />
+      </ScrollArea>
+      
     </div>
   );
 }

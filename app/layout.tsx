@@ -18,22 +18,23 @@ export const metadata: Metadata = {
   description: "Iwwwan site",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <NextTopLoader color="#ff0080" showSpinner={false} />
-          <Providers>
-            <MainNavbar />
-            <main className="min-h-screen flex flex-col justify-center items-center">
-              {children}
-            </main>
-            <MainFooter />
-          </Providers>
+        <Providers>
+          <MainNavbar />
+          <main className="min-h-screen flex flex-col justify-center items-center">
+            {children}
+          </main>
+          <MainFooter />
+        </Providers>
       </body>
     </html>
   );

@@ -10,6 +10,7 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import { Markdown } from "tiptap-markdown";
 import Highlight from "@tiptap/extension-highlight";
+import { ColorHighlighter } from './ColorHighlighter'
 
 import SlashCommand from "./slash-command";
 import { InputRule } from "@tiptap/core";
@@ -22,6 +23,7 @@ const CustomImage = TiptapImage.extend({
 });
 
 export const TiptapExtensions = [
+  ColorHighlighter,
   StarterKit.configure({
     bulletList: {
       HTMLAttributes: {
@@ -46,7 +48,7 @@ export const TiptapExtensions = [
     codeBlock: {
       HTMLAttributes: {
         class:
-          "rounded-sm bg-stone-100 p-5 font-mono font-medium text-stone-800",
+          "rounded-sm bg-background p-5 font-mono font-medium text-foreground",
       },
     },
     code: {
