@@ -1,73 +1,72 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { ClockIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { GitBranch } from "lucide-react";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
+import DEFAULT_PROJECTS from "@/constants/default-projects";
 
-const ProjectCard = () => {
+const [PROJECT_CARD_TYPE] = DEFAULT_PROJECTS;
+
+const ProjectCard: React.FC<Partial<typeof PROJECT_CARD_TYPE>> = ({
+  slug,
+  title,
+  description,
+  tags,
+  thumbnail,
+}) => {
   return (
-    <Card className="group transition-all overflow-hidden hover:scale-105 bg-card w-full relative">
-      <Link
-        aria-label="see posts"
-        href={"/"}
-        className={`inset-0 z-10 absolute w-full h-full`}
-      ></Link>
-      <AspectRatio ratio={16 / 9} className="relative">
-        <Image
-          src={"https://source.unsplash.com/random/?abstract,space"}
-          alt="thumbnail"
-          fill
-          className="rounded-md object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-        <div className="absolute bottom-2 right-2 flex gap-2 h-6">
-          <Badge
-            variant={"secondary"}
-            className="bg-secondary/75 text-muted-foreground"
-          >
-            tag
-          </Badge>
-          <Badge
-            variant={"default"}
-            className="bg-secondary/75 text-muted-foreground"
-          >
-            tag
-          </Badge>
-        </div>
-      </AspectRatio>
-      <CardHeader className="space-y-6">
-        <CardTitle>Back To Basic: Mental Model to Understand Flexbox</CardTitle>
-        <div className="flex gap-4">
-          <Badge
-            variant={"secondary"}
-            className="pl-0 bg-inherit text-muted-foreground"
-          >
-            <ClockIcon className="mr-2" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600">
-              6 min read
-            </span>
-          </Badge>
-          <Badge
-            variant={"secondary"}
-            className="pl-0 bg-inherit text-muted-foreground"
-          >
-            <EyeOpenIcon className="mr-2" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600">
-              7.750 Views
-            </span>
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <CardTitle>July 19, 2021</CardTitle>
-        <p className="mt-4">
-          These are the mental models that I use to really understand flexbox,
-          and I hope these can help you to understand too.
-        </p>
-      </CardContent>
-    </Card>
+    <Link aria-label="see posts" href={`/project/${slug}`}>
+      <Card className="group transition-all overflow-hidden hover:scale-105 bg-card w-full h-full relative">
+        <CardHeader>
+          <CardTitle className="text-xl">{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex gap-4">
+            <CardTitle>
+              <GitBranch />
+            </CardTitle>
+            <CardTitle>
+              <GitBranch />
+            </CardTitle>
+          </div>
+
+          <AspectRatio ratio={16 / 9} className="relative">
+            <Image
+              src={thumbnail}
+              alt="thumbnail"
+              fill
+              className="rounded-md object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className="absolute bottom-2 right-2 flex gap-2 h-6">
+              {tags?.map((tag, index) => (
+                <Badge
+                  key={index}
+                  variant={"secondary"}
+                  className="bg-secondary/75 text-muted-foreground"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </AspectRatio>
+          <CardTitle className="flex items-center">
+            See more
+            <ArrowRightIcon className="w-5 h-5 font-bold" />
+          </CardTitle>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 

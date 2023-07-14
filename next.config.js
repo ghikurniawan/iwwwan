@@ -10,7 +10,7 @@ const nextConfig = {
         return [
           {
             source: "/github",
-            destination: "https://github.com/steven-tey/novel",
+            destination: "https://github.com/ghiwwwan",
             permanent: true,
           },
           {
@@ -19,8 +19,8 @@ const nextConfig = {
             permanent: true,
           },
           {
-            source: "/deploy",
-            destination: "https://vercel.com/templates/next.js/novel",
+            source: "/email",
+            destination: "mailto:iwwwan.io@gmail.com",
             permanent: true,
           },
         ];
