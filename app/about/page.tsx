@@ -1,6 +1,6 @@
 import React from "react";
 import Section from "@/components/shared/Section";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   GitHubLogoIcon,
   IdCardIcon,
@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function About() {
   return (
-    <Section className="h-screen flex flex-col justify-center">
+    <Section className="min-h-[80vh] py-20">
       <article className="flex gap-2 flex-col">
         <h2 className="text-xl lg:text-3xl font-extrabold">About</h2>
         <h1 className="text-2xl lg:text-4xl font-extrabold">
@@ -52,31 +52,34 @@ export default function About() {
 
         <div className="flex w-full max-w-2xl">
           <Link href={"/"}>
-            <Button
-              variant={"ghost"}
-              className="group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background"
+            <span
+              className={`${buttonVariants({
+                variant: "ghost",
+              })} group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background`}
             >
               <IdCardIcon className="mr-2 w-5 h-5" />
               Resume
-            </Button>
+            </span>
           </Link>
           <Link href={"/"}>
-            <Button
-              variant={"ghost"}
-              className="group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background"
+            <span
+              className={`${buttonVariants({
+                variant: "ghost",
+              })} group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background`}
             >
               <TwitterLogoIcon className="mr-2 w-5 h-5" />
               @iwwwan
-            </Button>
+            </span>
           </Link>
           <Link href={"/"}>
-            <Button
-              variant={"ghost"}
-              className="group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background"
+            <span
+              className={`${buttonVariants({
+                variant: "ghost",
+              })} group px-1 lg:px2 text-md text-muted-foreground font-semibold hover:bg-background`}
             >
               <GitHubLogoIcon className="mr-2 w-5 h-5" />
               @ghiwwwan
-            </Button>
+            </span>
           </Link>
         </div>
         <h2 className="text-md lg:text-xl font-semibold max-w-2xl mt-4">

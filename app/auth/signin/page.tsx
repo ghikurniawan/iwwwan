@@ -10,7 +10,7 @@ export default async function Auth({searchParams}: {searchParams : {callbackUrl 
     redirect(callbackUrl ? callbackUrl : "/");
   }
   return (
-    <div className="flex h-screen w-full justify-center items-center">
+    <div className="flex min-h-[80vh] w-full justify-center items-center">
       <Card>
         <CardHeader>
           <CardTitle>Sign in</CardTitle>

@@ -11,7 +11,7 @@ const ShortPost = () => {
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Short blog" />
+        <SelectValue placeholder="Short" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

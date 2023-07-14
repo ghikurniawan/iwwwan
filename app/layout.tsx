@@ -20,17 +20,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  sheet,
 }: {
   children: React.ReactNode;
+  sheet: React.ReactNode;
 }) {
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <NextTopLoader color="#ff0080" showSpinner={false} />
         <Providers>
+          {sheet}
           <MainNavbar />
-          <main className="min-h-screen flex flex-col justify-center items-center">
+          <main className="min-h-[80vh] flex flex-col justify-center items-center">
             {children}
           </main>
           <MainFooter />
