@@ -1,3 +1,6 @@
+import FLEX_MENTAL_MODEL from "./blog/flex-mental-model";
+import NEXTJS_DATA_FETCHING from "./blog/nextjs-data-fetching";
+
 const DEFAULT_POSTS = [
     {
         id: '1',
@@ -7,10 +10,7 @@ const DEFAULT_POSTS = [
         createdAt: new Date().toLocaleDateString(),
         updatedAt: new Date().toLocaleDateString(),
         tags: ['css', 'flexbox'],
-        content: {
-            type: 'doc',
-            content: []
-        },
+        content: FLEX_MENTAL_MODEL,
         views: 5603,
         likes: 320,
         thumbnail: 'https://source.unsplash.com/random/?abstract,jellyfish'
@@ -22,11 +22,8 @@ const DEFAULT_POSTS = [
         description: `When I started to learn Next.js, I got overwhelmed with the list of abbreviations that looks similar, I didn't know what it is and what is the difference. It is quite confusing because when using Create React App,`,
         createdAt: new Date().toLocaleDateString(),
         updatedAt: new Date().toLocaleDateString(),
-        tags: ['tag1', 'tag2'],
-        content: {
-            type: 'doc',
-            content: []
-        },
+        tags: ['nextjs'],
+        content: NEXTJS_DATA_FETCHING,
         views: 8250,
         likes: 620,
         thumbnail: 'https://source.unsplash.com/random/?abstract,paint'

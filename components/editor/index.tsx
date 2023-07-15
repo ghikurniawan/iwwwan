@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import { TiptapEditorProps } from "./props";
 import { TiptapExtensions } from "./extensions";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
@@ -14,46 +14,47 @@ import { EditorBubbleMenu } from "./components";
 import { getPrevText } from "@/lib/editor";
 import { ScrollArea } from "../ui/scroll-area";
 
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  // MenubarCheckboxItem,
-  // MenubarRadioGroup,
-  // MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
+interface IEditorProps {
+  // eslint-disable-next-line no-unused-vars
+  onEditor?: (editor: Editor) => void;
+  // eslint-disable-next-line no-unused-vars
+  onSavedStatus?: (arg: string) => void;
+  editable?: boolean;
+  autofocus?: boolean | "start" | "end";
+  content?: object;
+}
 
-export default function Editor() {
-  const [content, setContent] = useLocalStorage(
+export default function NovelEditor({
+  onEditor,
+  onSavedStatus,
+  editable = true,
+  autofocus = "end",
+  content,
+}: IEditorProps) {
+  const [defaultContent, setDefaultContent] = useLocalStorage(
     "content",
-    DEFAULT_EDITOR_CONTENT,
+    DEFAULT_EDITOR_CONTENT
   );
+
   const [saveStatus, setSaveStatus] = useState("Saved");
 
   const [hydrated, setHydrated] = useState(false);
-
-  const [canEdit, setCanEdit] = useState(true)
-
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
-    const json = editor.getJSON();
-    setSaveStatus("Saving...");
-    setContent(json);
-    // Simulate a delay in saving.
-    setTimeout(() => {
-      setSaveStatus("Saved");
-    }, 500);
+    if (editable) {
+      const json = editor.getJSON();
+      setSaveStatus("Saving...");
+      setDefaultContent(json);
+      // Simulate a delay in saving.
+      setTimeout(() => {
+        setSaveStatus("Saved");
+      }, 500);
+    }
   }, 750);
 
   const editor = useEditor({
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
+    editable,
     onUpdate: (e) => {
       setSaveStatus("Unsaved");
       const selection = e.editor.state.selection;
@@ -68,7 +69,7 @@ export default function Editor() {
         complete(
           getPrevText(e.editor, {
             chars: 5000,
-          }),
+          })
         );
         // complete(e.editor.storage.markdown.getMarkdown());
         va.track("Autocomplete Shortcut Used");
@@ -76,8 +77,16 @@ export default function Editor() {
         debouncedUpdates(e);
       }
     },
-    autofocus: "end",
+    autofocus,
   });
+
+  useEffect(() => {
+    onEditor && onEditor(editor);
+  }, [editor, onEditor]);
+
+  useEffect(() => {
+    onSavedStatus && onSavedStatus(saveStatus);
+  }, [saveStatus, onSavedStatus]);
 
   const { complete, completion, isLoading, stop } = useCompletion({
     id: "novel",
@@ -143,93 +152,21 @@ export default function Editor() {
 
   // Hydrate the editor with the content from localStorage.
   useEffect(() => {
-    if (editor && content && !hydrated) {
-      editor.commands.setContent(content);
+    if (editor && defaultContent && !hydrated) {
+      editor.commands.setContent(content ?? defaultContent);
       setHydrated(true);
     }
-  }, [editor, content, hydrated]);
-
-  useEffect(() => {
-    editor?.setEditable(canEdit)
-  }, [editor, canEdit]);
+  }, [editor, defaultContent, hydrated, content]);
 
   return (
-    <div
-      className="min-h-[500px] w-full max-w-screen-xl border p-4 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
+    <ScrollArea
+      onClick={() => {
+        editable && editor?.chain().focus().run();
+      }}
+      className="min-h-[600px] w-full mt-2 rounded-md border p-2"
     >
-      <div className="flex justify-between items-center">
-        <Menubar>
-          <MenubarMenu>
-            <MenubarTrigger>File</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem onClick={()=>{
-                setCanEdit(false)
-              }}>
-                Publish
-              </MenubarItem>
-              <MenubarItem onClick={()=>{
-                setCanEdit(true)
-              }}>
-                Edit
-              </MenubarItem>
-              {/* <MenubarSeparator />
-              <MenubarSub>
-                <MenubarSubTrigger>Share</MenubarSubTrigger>
-                <MenubarSubContent>
-                  <MenubarItem>Email link</MenubarItem>
-                  <MenubarItem>Messages</MenubarItem>
-                  <MenubarItem>Notes</MenubarItem>
-                </MenubarSubContent>
-              </MenubarSub>
-              <MenubarSeparator />
-              <MenubarItem>
-                Print... <MenubarShortcut>⌘P</MenubarShortcut>
-              </MenubarItem> */}
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Edit</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>
-                Undo <MenubarShortcut>⌘Z</MenubarShortcut>
-              </MenubarItem>
-              <MenubarItem>
-                Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarSub>
-                <MenubarSubTrigger>Find</MenubarSubTrigger>
-                <MenubarSubContent>
-                  <MenubarItem>Search the web</MenubarItem>
-                  <MenubarSeparator />
-                  <MenubarItem>Find...</MenubarItem>
-                  <MenubarItem>Find Next</MenubarItem>
-                  <MenubarItem>Find Previous</MenubarItem>
-                </MenubarSubContent>
-              </MenubarSub>
-              <MenubarSeparator />
-              <MenubarItem>Cut</MenubarItem>
-              <MenubarItem>Copy</MenubarItem>
-              <MenubarItem>Paste</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        </Menubar>
-
-        <div className={`text-muted-foreground px-2 py-1 text-sm rounded-lg ${saveStatus === 'Saved' ? "border-green-600 border text-green-600" : ""}`}>
-          {saveStatus}
-        </div>
-      </div>
-
-      <ScrollArea 
-        onClick={() => {
-          editor?.chain().focus().run();
-        }}
-        className="h-[70vh] w-full mt-2 rounded-md border p-2"
-      >
-          {editor && <EditorBubbleMenu editor={editor} />}
-          <EditorContent editor={editor} />
-      </ScrollArea>
-      
-    </div>
+      {editor && <EditorBubbleMenu editor={editor} />}
+      <EditorContent editor={editor} />
+    </ScrollArea>
   );
 }
