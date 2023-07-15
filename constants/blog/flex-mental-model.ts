@@ -18,14 +18,6 @@ const FLEX_MENTAL_MODEL = {
       "content": [
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "Mental models are personal, internal representations of external reality that people use to interact with the world around them. They are constructed by individuals based on their unique life experiences, perceptions, and understandings of the world. These are the mental model that I use to really understand flexbox, and I hope these can help you to understand too."
         }
       ]
@@ -35,14 +27,6 @@ const FLEX_MENTAL_MODEL = {
       "content": [
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "In this flexbox tutorial we will try to understand these properties & topics"
         }
       ]
@@ -147,14 +131,6 @@ const FLEX_MENTAL_MODEL = {
       "content": [
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "There are 4 values for "
         },
         {
@@ -168,14 +144,6 @@ const FLEX_MENTAL_MODEL = {
         },
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": " property which are:"
         }
       ]
@@ -256,7 +224,7 @@ const FLEX_MENTAL_MODEL = {
             {
               "type": "textStyle",
               "attrs": {
-                "color": "#9333EA"
+                "color": "#008A00"
               }
             }
           ],
@@ -270,7 +238,7 @@ const FLEX_MENTAL_MODEL = {
               "attrs": {
                 "href": "http://flexbox.help",
                 "target": "_blank",
-                "class": "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer"
+                "class": "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer"
               }
             },
             {
@@ -279,7 +247,7 @@ const FLEX_MENTAL_MODEL = {
             {
               "type": "textStyle",
               "attrs": {
-                "color": "#9333EA"
+                "color": "#008A00"
               }
             }
           ],
@@ -291,7 +259,7 @@ const FLEX_MENTAL_MODEL = {
             {
               "type": "textStyle",
               "attrs": {
-                "color": "#008A00"
+                "color": "rgb(0, 138, 0)"
               }
             }
           ],
@@ -299,35 +267,9 @@ const FLEX_MENTAL_MODEL = {
         },
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "has a great interactive illustration if you want to check it out. These are all the output I reproduced:"
         }
       ]
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
     }
   ]
 }

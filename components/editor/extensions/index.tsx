@@ -10,7 +10,7 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import { Markdown } from "tiptap-markdown";
 import Highlight from "@tiptap/extension-highlight";
-import { ColorHighlighter } from './ColorHighlighter'
+import { ColorHighlighter } from "./ColorHighlighter";
 
 import SlashCommand from "./slash-command";
 import { InputRule } from "@tiptap/core";
@@ -48,7 +48,7 @@ export const TiptapExtensions = [
     codeBlock: {
       HTMLAttributes: {
         class:
-          "rounded-sm bg-background p-5 font-mono font-medium text-foreground",
+          "rounded-sm bg-card border p-5 font-mono font-medium text-foreground",
       },
     },
     code: {
@@ -80,7 +80,7 @@ export const TiptapExtensions = [
 
             tr.insert(start - 1, this.type.create(attributes)).delete(
               tr.mapping.map(start),
-              tr.mapping.map(end),
+              tr.mapping.map(end)
             );
           },
         }),
