@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Monitor } from "lucide-react";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
@@ -30,13 +31,16 @@ export function ModeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          <SunIcon className="h-[1.1rem] w-[1.1rem] text-muted-foreground" />
+          &nbsp; Light
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          <MoonIcon className="h-[1.1rem] w-[1.1rem] text-muted-foreground" />
+          &nbsp; Dark
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          <Monitor className="h-[1.1rem] w-[1.1rem] text-muted-foreground" />
+          &nbsp; System
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -265,6 +265,11 @@ const CommandList = ({
         va.track("Rate Limit Reached");
         return;
       }
+      if (response.status === 401) {
+        toast.error("Un Authorized.");
+        va.track("Un Authorized User");
+        return;
+      }
       editor.chain().focus().deleteRange(range).run();
     },
     onFinish: (_prompt, completion) => {
@@ -291,14 +296,14 @@ const CommandList = ({
             getPrevText(editor, {
               chars: 5000,
               offset: 1,
-            }),
+            })
           );
         } else {
           command(item);
         }
       }
     },
-    [complete, command, editor, items],
+    [complete, command, editor, items]
   );
 
   useEffect(() => {

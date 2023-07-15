@@ -1,4 +1,6 @@
 import IntersetprionSheet from "@/components/shared/IntersetprionSheet";
+import { Suspense, lazy } from "react";
+const BlogView = lazy(() => import("@/components/blog/BlogView"));
 
 export default function BlogViewInterseption({
   params,
@@ -8,71 +10,9 @@ export default function BlogViewInterseption({
   const { slug } = params;
   return (
     <IntersetprionSheet>
-      {slug}
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ad sit
-        dolore corrupti dignissimos nulla iusto aperiam atque nostrum maiores!
-      </p>
+      <Suspense fallback={"loading..."}>
+        <BlogView slug={slug} />
+      </Suspense>
     </IntersetprionSheet>
   );
 }
