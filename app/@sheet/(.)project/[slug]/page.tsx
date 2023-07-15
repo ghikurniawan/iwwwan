@@ -1,4 +1,6 @@
 import IntersetprionSheet from "@/components/shared/IntersetprionSheet";
+import React, { Suspense, lazy } from "react";
+const ProjectView = lazy(() => import("@/components/project/ProjectView"));
 
 export default function BlogViewInterseption({
   params,
@@ -8,12 +10,9 @@ export default function BlogViewInterseption({
   const { slug } = params;
   return (
     <IntersetprionSheet>
-      {slug}
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut amet
-        distinctio blanditiis consectetur iste tempore aut aperiam repellat,
-        accusamus odio?
-      </p>
+      <Suspense fallback={"loading..."}>
+        <ProjectView slug={slug} />
+      </Suspense>
     </IntersetprionSheet>
   );
 }
