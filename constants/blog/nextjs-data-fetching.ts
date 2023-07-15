@@ -23,14 +23,6 @@ const NEXTJS_DATA_FETCHING = {
       "content": [
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "When I started to learn Next.js, I got overwhelmed with the list of abbreviations that looks similar, I didn't know what it is and what is the difference. It is quite confusing because when using Create React App, we usually only use 1 strategy to fetch data from API which is using "
         },
         {
@@ -61,14 +53,6 @@ const NEXTJS_DATA_FETCHING = {
       "content": [
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "Next.js has many data fetching strategies. Although initially Next.js was well known to be a Server-Side Rendering Framework, it turns out that Next.js has 4 methods of Data Fetching. Here is the short explanation each so you get familiar with the abbreviation of CSR, SSR, SSG, ISR."
         }
       ]
@@ -242,14 +226,6 @@ const NEXTJS_DATA_FETCHING = {
       "content": [
         {
           "type": "text",
-          "marks": [
-            {
-              "type": "textStyle",
-              "attrs": {
-                "color": "rgb(209, 213, 219)"
-              }
-            }
-          ],
           "text": "Don't worry if you didn't get that, because I will be explaining it thoroughly, just familiarize the words first."
         }
       ]
@@ -294,6 +270,10 @@ const NEXTJS_DATA_FETCHING = {
       "content": [
         {
           "type": "text",
+          "text": "Special Function:"
+        },
+        {
+          "type": "text",
           "marks": [
             {
               "type": "textStyle",
@@ -302,7 +282,7 @@ const NEXTJS_DATA_FETCHING = {
               }
             }
           ],
-          "text": "Special Function: "
+          "text": " "
         },
         {
           "type": "text",
@@ -326,7 +306,7 @@ const NEXTJS_DATA_FETCHING = {
               "attrs": {
                 "href": "https://next-render.theodorusclarence.com/render/csr",
                 "target": "_blank",
-                "class": "animated-underline custom-link inline-flex items-center font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300 border-b border-dotted border-dark hover:border-black/0 cursor-newtab"
+                "class": "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer animated-underline custom-link inline-flex items-center font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300 border-b border-dotted border-dark hover:border-black/0 cursor-newtab"
               }
             },
             {
@@ -335,7 +315,7 @@ const NEXTJS_DATA_FETCHING = {
             {
               "type": "textStyle",
               "attrs": {
-                "color": "#008A00"
+                "color": "rgb(0, 138, 0)"
               }
             }
           ],
@@ -368,21 +348,9 @@ const NEXTJS_DATA_FETCHING = {
       "content": [
         {
           "type": "text",
-          "text": "export default function CSRPage() {\n  const [dateTime, setDateTime] = React.useState<string>();\n\n  React.useEffect(() => {\n    axios\n      .get('https://worldtimeapi.org/api/ip')\n      .then((res) => {\n        setDateTime(res.data.datetime);\n      })\n      .catch((error) => console.error(error));\n  }, []);\n\n  return (\n    <main>\n      <TimeSection dateTime={dateTime} />\n    </main>\n  );\n}"
+          "text": "export default function CSRPage() {\n  const [dateTime, setDateTime] = React.useState<string>();\n\n  React.useEffect(() => {\n    axios\n      .get('https://worldtimeapi.org/api/ip')\n      .then((res) => {\n        setDateTime(res.data.datetime);\n      })\n      .catch((error) => console.error(error));\n  }, []);\n\n  return (\n    <main>\n      <TimeSection dateTime={dateTime} />\n    </main>\n  );"
         }
       ]
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
-    },
-    {
-      "type": "paragraph"
     }
   ]
 }

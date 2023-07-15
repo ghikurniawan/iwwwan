@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import DEFAULT_POSTS from "@/constants/default-posts";
-import NovelEditor from "../editor";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { AspectRatio } from "../ui/aspect-ratio";
+
+const NovelEditor = lazy(() => import("@/components/editor"));
 
 const BlogView: React.FC<{ slug: string }> = ({ slug }) => {
   const post = DEFAULT_POSTS.find((p) => p.slug === slug);
@@ -28,7 +29,9 @@ const BlogView: React.FC<{ slug: string }> = ({ slug }) => {
         <h1 className="text-xl font-bold">{title}</h1>
         <p className="text-sm text-muted-foreground">{description}</p>
       </header>
-      <NovelEditor editable={false} autofocus={false} content={content} />
+      <Suspense fallback={"loading..."}>
+        <NovelEditor editable={false} autofocus={false} content={content} />
+      </Suspense>
     </div>
   );
 };
