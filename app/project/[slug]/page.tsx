@@ -1,6 +1,18 @@
-import React from "react";
+import Section from "@/components/shared/Section";
+import React, { Suspense, lazy } from "react";
+const ProjectView = lazy(() => import("@/components/project/ProjectView"));
 
-export default function ProjectView({ params }: { params: { slug: string } }) {
+export default function ProjectViewPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
-  return <div>ProjectView : {slug}</div>;
+  return (
+    <Section className="px-2 min-h-screen">
+      <Suspense fallback={"loading..."}>
+        <ProjectView slug={slug} />
+      </Suspense>
+    </Section>
+  );
 }

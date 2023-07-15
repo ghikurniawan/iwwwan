@@ -1,3 +1,6 @@
+import HEXSCAPE_PROJECT from "./project/hexscapt-project";
+import NOTIONLINK_PROJECT from "./project/notionlink-project";
+
 const DEFAULT_PROJECTS = [
   {
     id: '1',
@@ -9,10 +12,7 @@ const DEFAULT_PROJECTS = [
     views: 8950,
     likes: 540,
     tags: ['tag1', 'tag2'],
-    content: {
-      type: 'doc',
-      content: []
-    },
+    content: HEXSCAPE_PROJECT,
     thumbnail: 'https://source.unsplash.com/random/?abstract,space'
   },
   {
@@ -25,10 +25,7 @@ const DEFAULT_PROJECTS = [
     views: 6250,
     likes: 240,
     tags: ['tag1', 'tag2'],
-    content: {
-      type: 'doc',
-      content: []
-    },
+    content: NOTIONLINK_PROJECT,
     thumbnail: 'https://source.unsplash.com/random/?abstract,paint'
   },
 ]
