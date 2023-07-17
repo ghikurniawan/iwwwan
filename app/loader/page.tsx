@@ -2,18 +2,18 @@ import Section from "@/components/shared/Section";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { FC } from "react";
 
-export default function LoadingBlog() {
+interface LoaderProps {}
+
+const Loader: FC<LoaderProps> = () => {
   return (
-    <Section className="py-10 space-y-5 flex-initial min-h-screen">
-      <div className="bg-accent mt-4 h-24 w-36 animate-pulse"></div>
-      <div className="h-12 md:h-5 space-y-4">
-        <div className="h-4 md:h-5 w-2/3 lg:w-1/3 bg-accent animate-pulse"></div>
-        <div className="md:hidden h-4 md:h-5 w-1/5 lg:w-1/3 bg-accent animate-pulse"></div>
-      </div>
+    <Section className="py-12 space-y-5 flex-initial min-h-screen">
+      <div className="bg-accent h-24 w-36 animate-pulse my-4 "></div>
+      <div className="h-10 md:h-6 w-2/3 lg:w-1/3 bg-accent animate-pulse"></div>
       <div className="flex gap-4">
-        <div className="w-full h-9 bg-accent animate-pulse border rounded-md" />
-        <div className="w-full basis-3/6 lg:basis-1/6 h-9 bg-secondary rounded-md border animate-pulse" />
+        <div className="w-full h-8 bg-accent animate-pulse border rounded-md" />
+        <div className="w-full basis-3/6 lg:basis-1/6 h-8 bg-secondary rounded-md border animate-pulse" />
       </div>
       <div className="flex flex-wrap gap-2">
         <p className="block bg-accent animate-pulse w-32"></p>
@@ -58,4 +58,6 @@ export default function LoadingBlog() {
       </div>
     </Section>
   );
-}
+};
+
+export default Loader;
