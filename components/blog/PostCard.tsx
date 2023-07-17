@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import {
@@ -11,22 +13,17 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ClockIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import DEFAULT_POSTS from "@/constants/default-posts";
+import { TypeBlog } from "@/types";
+import { useBlogContext } from "@/contexts/BlogContext";
+import { notFound } from "next/navigation";
 
-const [POSTCARD_TYPE] = DEFAULT_POSTS;
-
-const PostCard: React.FC<Partial<typeof POSTCARD_TYPE>> = ({
-  slug,
-  title,
-  description,
-  createdAt,
-  views,
-  tags,
-  thumbnail,
-}) => {
+const PostCard: React.FC<{ blog: TypeBlog }> = ({ blog }) => {
+  const { setBlog } = useBlogContext();
+  if (!blog) notFound();
+  const { slug, title, createdAt, stats, tag, thumbnail } = blog;
   return (
-    <Link href={`/blog/${slug}`}>
-      <Card className="group transition-all overflow-hidden hover:scale-105 bg-card w-full h-full relative">
+    <Link href={`/blog/${slug}`} onClick={() => setBlog(blog)}>
+      <Card className="group transition-all overflow-hidden hover:border-foreground/50 bg-card w-full h-full relative">
         <AspectRatio ratio={16 / 9} className="relative">
           <Image
             src={thumbnail}
@@ -36,13 +33,13 @@ const PostCard: React.FC<Partial<typeof POSTCARD_TYPE>> = ({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <div className="absolute bottom-2 right-2 flex gap-2 h-6">
-            {tags?.map((tag, index) => (
+            {tag?.map((t, index) => (
               <Badge
                 key={index}
                 variant={"secondary"}
                 className="bg-secondary/75 text-muted-foreground"
               >
-                {tag}
+                {t.tagName}
               </Badge>
             ))}
           </div>
@@ -65,14 +62,19 @@ const PostCard: React.FC<Partial<typeof POSTCARD_TYPE>> = ({
             >
               <EyeOpenIcon className="mr-2" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600">
-                {views} Views
+                {stats?.views} Views
               </span>
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          <CardTitle>{createdAt}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardTitle>{createdAt.toLocaleDateString()}</CardTitle>
+          <CardDescription>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
+            repellendus mollitia? Nostrum iste ab amet temporibus sapiente
+            veritatis deserunt, eligendi saepe. In, mollitia beatae delectus
+            quidem temporibus consectetur ipsam aperiam.
+          </CardDescription>
         </CardContent>
       </Card>
     </Link>

@@ -26,6 +26,9 @@ const MainNavItemsConstant = [
   },
 ]
 
+const REVALIDATE = 60
+
 export {
-  MainNavItemsConstant
+  MainNavItemsConstant,
+  REVALIDATE
 }

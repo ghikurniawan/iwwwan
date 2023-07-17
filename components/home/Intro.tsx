@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Section from "../shared/Section";
 import { Button } from "../ui/button";
 
 import { ArrowDownIcon } from "@radix-ui/react-icons";
 import PostCard from "../blog/PostCard";
-import DEFAULT_POSTS from "@/constants/default-posts";
+import { getAllBlogPostAction } from "@/app/_actions";
+import { TypeBlog } from "@/types";
 
 const Intro = () => {
   const refIntro = useRef(null);
+  const [data, setData] = useState<TypeBlog[]>();
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -18,8 +20,24 @@ const Intro = () => {
       });
     }
   };
-  const firstPost = DEFAULT_POSTS[0] || {};
-  const secondPost = DEFAULT_POSTS[1] || {};
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Simulating an asynchronous API call with a Promise
+        // const response = await new Promise((resolve) => {
+        //   setTimeout(() => resolve("Data fetched!"), 2000);
+        // });
+        const response = await getAllBlogPostAction(2);
+        setData(response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Section id="intro" className="relative flex flex-col justify-center">
       <div className="absolute -top-12 left-0 right-0">
@@ -51,11 +69,11 @@ const Intro = () => {
         </div>
         <div className="lg:w-1/2 w-full p-0 md:py-8 md:px-24 min-h-[33rem]">
           <div className="w-full relative">
-            <div className="absolute z-10 transition-all hover:scale-105 w-full">
-              <PostCard {...firstPost} />
+            <div className="absolute z-10 w-full">
+              {data && <PostCard blog={data[0]} />}
             </div>
             <div className="hidden absolute w-full lg:block -top-2 transform translate-y-7 translate-x-7 rotate-6">
-              <PostCard {...secondPost} />
+              {data && <PostCard blog={data[1]} />}
             </div>
           </div>
         </div>
