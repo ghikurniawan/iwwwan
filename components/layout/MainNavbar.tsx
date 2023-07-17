@@ -24,7 +24,7 @@ export default function MainNavbar() {
       >
         {/* <div className="w-full h-2 bg-gradient-to-r from-green-500 to-cyan-500"/> */}
         <div className="max-w-screen-xl px-4 py-2 w-full mx-auto flex justify-between items-center">
-          <Link href={"/"}>
+          <Link href={"/"} aria-label="Logo">
             <IwwwanLogo className="hover:fill-accent-pink" />
           </Link>
           <div className="flex gap-2">

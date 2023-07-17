@@ -71,9 +71,7 @@ const PostCard: React.FC<{ blog: TypeBlog }> = ({ blog }) => {
           <CardTitle>{createdAt.toLocaleDateString()}</CardTitle>
           <CardDescription>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-            repellendus mollitia? Nostrum iste ab amet temporibus sapiente
-            veritatis deserunt, eligendi saepe. In, mollitia beatae delectus
-            quidem temporibus consectetur ipsam aperiam.
+            repellendus mollitia? Nostrum iste ab amet
           </CardDescription>
         </CardContent>
       </Card>

@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useRef } from "react";
 import Section from "../shared/Section";
 import { Button } from "../ui/button";
 
 import { ArrowDownIcon } from "@radix-ui/react-icons";
 import PostCard from "../blog/PostCard";
-import { getAllBlogPostAction } from "@/app/_actions";
 import { TypeBlog } from "@/types";
 
-const Intro = () => {
+const Intro: FC<{ blogs: TypeBlog[] }> = ({ blogs }) => {
   const refIntro = useRef(null);
-  const [data, setData] = useState<TypeBlog[]>();
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
@@ -20,23 +18,6 @@ const Intro = () => {
       });
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Simulating an asynchronous API call with a Promise
-        // const response = await new Promise((resolve) => {
-        //   setTimeout(() => resolve("Data fetched!"), 2000);
-        // });
-        const response = await getAllBlogPostAction(2);
-        setData(response);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <Section id="intro" className="relative flex flex-col justify-center">
@@ -70,10 +51,10 @@ const Intro = () => {
         <div className="lg:w-1/2 w-full p-0 md:py-8 md:px-24 min-h-[33rem]">
           <div className="w-full relative">
             <div className="absolute z-10 w-full">
-              {data && <PostCard blog={data[0]} />}
+              {blogs && <PostCard blog={blogs[0]} />}
             </div>
             <div className="hidden absolute w-full lg:block -top-2 transform translate-y-7 translate-x-7 rotate-6">
-              {data && <PostCard blog={data[1]} />}
+              {blogs && <PostCard blog={blogs[1]} />}
             </div>
           </div>
         </div>

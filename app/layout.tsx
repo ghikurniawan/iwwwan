@@ -7,6 +7,7 @@ import NextTopLoader from "nextjs-toploader";
 import MainNavbar from "@/components/layout/MainNavbar";
 import MainFooter from "@/components/layout/MainFooter";
 import Providers from "./providers";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +27,12 @@ export default async function RootLayout({
   sheet: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html
+      lang="en"
+      className={cn("antialiased", inter.className)}
+      suppressHydrationWarning
+    >
+      <body className={`${inter.className} antialiased min-h-screen`}>
         <NextTopLoader color="#ff0080" showSpinner={false} />
         <Providers>
           {sheet}
