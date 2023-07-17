@@ -8,6 +8,7 @@ import { displayFontMapper, defaultFontMapper } from "@/styles/fonts";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import { cn } from "@/lib/utils";
 import { SessionProvider } from "next-auth/react";
+import { BlogProvider } from "@/contexts/BlogContext";
 
 export const AppContext = createContext<{
   font: string;
@@ -28,11 +29,7 @@ export default function Providers({ children }: { children: ReactNode }) {
   const [font, setFont] = useLocalStorage<string>("novel__font", "Default");
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system" 
-      enableSystem
-    >
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <AppContext.Provider
         value={{
           font,
@@ -40,11 +37,11 @@ export default function Providers({ children }: { children: ReactNode }) {
         }}
       >
         <ToasterProvider />
-          <SessionProvider>
-            <div className={cn(displayFontMapper[font], defaultFontMapper[font])}>
-              {children}
-            </div>
-          </SessionProvider>
+        <SessionProvider>
+          <div className={cn(displayFontMapper[font], defaultFontMapper[font])}>
+            <BlogProvider>{children}</BlogProvider>
+          </div>
+        </SessionProvider>
         <Analytics />
       </AppContext.Provider>
     </ThemeProvider>
