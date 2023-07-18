@@ -20,7 +20,7 @@ export default function MainNavbar() {
       <nav
         className={`${
           scrolled ? "border-b bg-background/50 backdrop-blur-xl " : ""
-        } sticky top-0 w-full h-[10vh] z-40 transition-all`}
+        } sticky top-0 w-full lg:h-[10vh] z-40 transition-all`}
       >
         {/* <div className="w-full h-2 bg-gradient-to-r from-green-500 to-cyan-500"/> */}
         <div className="max-w-screen-xl px-4 py-2 w-full mx-auto flex justify-between items-center">
