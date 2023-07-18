@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/authOptions"
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 const getServerSessionAction = async () => {
     const session = await getServerSession(authOptions)
@@ -94,12 +95,76 @@ const statViewAction = async (slug: string) => {
     })
 }
 
+//   id        String @id @default (cuid())
+//   title     String
+//   content   Json ?
+//   slug      String @unique
+//   stats     Stats @relation(fields: [slug], references: [slug])
+//   thumbnail String ?
+//   createdAt DateTime @default (now())
+//   updatedAt DateTime @updatedAt
+//   published Boolean @default (false)
+//   authorId  String
+//   author    User @relation(fields: [authorId], references: [id])
+//   tag       Tag[]
+
+export type CreateBlog = {
+    title: string;
+    content: Prisma.JsonValue;
+    slug: string;
+    thumbnail: string;
+    authorId: string;
+    tag: string[],
+    publish: boolean
+}
+
+const createBlogAction = async ({
+    title,
+    thumbnail,
+    content,
+    slug,
+    authorId,
+    tag,
+    publish
+}: CreateBlog) => {
+    try {
+        const res = await prisma.blog.create({
+            data: {
+                title,
+                thumbnail,
+                content: content,
+                stats: {
+                    create: {
+                        slug
+                    }
+                },
+                author: {
+                    connect: {
+                        id: authorId
+                    }
+                },
+                tag: {
+                    createMany: {
+                        data: tag.map((item) => ({ tagName: item }))
+                    }
+                },
+                published: publish
+            }
+        })
+        return res
+    } catch (err) {
+        console.log(err)
+        return
+    }
+}
+
 export {
     getServerSessionAction,
     getAllBlogPostAction,
     getBlogPostBySlugAction,
     getAllSlug,
-    statViewAction
+    statViewAction,
+    createBlogAction
 };
 
 
