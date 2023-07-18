@@ -1,60 +1,59 @@
 import Section from "@/components/shared/Section";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { FC } from "react";
 
 interface LoaderProps {}
 
 const Loader: FC<LoaderProps> = () => {
   return (
-    <Section className="py-12 space-y-5 flex-initial min-h-screen">
-      <div className="bg-accent h-24 w-36 animate-pulse my-4 "></div>
-      <div className="h-10 md:h-6 w-2/3 lg:w-1/3 bg-accent animate-pulse"></div>
-      <div className="flex gap-4">
-        <div className="w-full h-8 bg-accent animate-pulse border rounded-md" />
-        <div className="w-full basis-3/6 lg:basis-1/6 h-8 bg-secondary rounded-md border animate-pulse" />
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <p className="block bg-accent animate-pulse w-32"></p>
-        {[1, 2, 3, 4, 5, 6, 7].map((tag) => (
-          <Badge
-            key={tag}
-            variant={"secondary"}
-            className="h-6 w-12 animate-pulse"
-          ></Badge>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map((k) => (
-          <Card key={k} className="bg-card w-full h-full relative">
-            <AspectRatio ratio={16 / 9} className="relative">
-              <div className="w-full h-full animate-pulse bg-accent"></div>
-              <div className="absolute bottom-4 right-4 flex gap-2">
-                <div className="h-6 w-8 rounded-md bg-background"></div>
-                <div className="h-6 w-12 rounded-md bg-background"></div>
+    <Section className="px-2 min-h-screen">
+      <div className="py-10 space-y-4">
+        <AspectRatio ratio={21 / 9} className="relative">
+          <div className="w-full h-full bg-secondary animate-pulse rounded-xl"></div>
+        </AspectRatio>
+        <div className="mt-6 space-y-2">
+          <div className="h-6 w-full lg:w-1/4 bg-secondary animate-pulse"></div>
+          <div className="md:hidden h-6 w-1/5 bg-secondary animate-pulse"></div>
+        </div>
+        {/* <div className="flex flex-col-reverse lg:flex-row gap-2">
+          <div className=" basis-3/4 w-full">
+            <Suspense fallback={"loading..."}>
+              <NovelEditor
+                editable={false}
+                autofocus={false}
+                content={content as object}
+              />
+            </Suspense>
+          </div>
+          <div className="basis-1/3 w-full">
+            <div className="sticky top-20 flex lg:flex-col justify-between">
+              <div className="lg:py-4 space-y-2">
+                <h4>{author?.username ?? "Guest"}</h4>
+                <div className="flex gap-4">
+                  <Badge
+                    variant={"secondary"}
+                    className="pl-0 bg-inherit hover:bg-inherit text-accent-pink"
+                  >
+                    <ClockIcon className="mr-2" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600">
+                      6 min read
+                    </span>
+                  </Badge>
+                  <Badge
+                    variant={"secondary"}
+                    className="pl-0 bg-inherit hover:bg-inherit text-accent-pink"
+                  >
+                    <EyeOpenIcon className="mr-2" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600">
+                      {stats?.views} Views
+                    </span>
+                  </Badge>
+                </div>
               </div>
-            </AspectRatio>
-            <CardContent className="py-4 space-y-4">
-              <div>
-                <div className="w-full h-3 bg-secondary animate-pulse"></div>
-                <div className="hidden md:block w-2/4 h-3 mt-2 bg-secondary animate-pulse"></div>
-              </div>
-              <div className="flex gap-4 py-2">
-                <div className="h-4 w-14 bg-secondary animate-pulse"></div>
-                <div className="h-4 w-14 bg-secondary animate-pulse"></div>
-              </div>
-              <div className="h-6 w-24 bg-secondary animate-pulse"></div>
-              <div className="space-y-2">
-                <div className="w-full h-2 bg-secondary animate-pulse"></div>
-                <div className="w-full h-2 bg-secondary animate-pulse"></div>
-                <div className="w-full h-2 bg-secondary animate-pulse"></div>
-                <div className="w-full h-2 bg-secondary animate-pulse"></div>
-                <div className="w-3/4 h-2 bg-secondary animate-pulse"></div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              <div>right</div>
+            </div>
+          </div>
+        </div> */}
       </div>
     </Section>
   );

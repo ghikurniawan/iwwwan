@@ -12,10 +12,11 @@ export default async function Home() {
     <>
       <Hero />
       <Suspense fallback={"..."}>
-        {/* @ts-ignore ExoticComponent */}
         <ExoticComponent />
       </Suspense>
-      <FeaturedProject />
+      <Suspense fallback={"..."}>
+        <FeaturedProject />
+      </Suspense>
       <LibrarySnippets />
     </>
   );

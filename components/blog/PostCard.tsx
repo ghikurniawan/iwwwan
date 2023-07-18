@@ -15,21 +15,19 @@ import { Badge } from "@/components/ui/badge";
 import { ClockIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { TypeBlog } from "@/types";
 import { useBlogContext } from "@/contexts/BlogContext";
-import { notFound } from "next/navigation";
 
 const PostCard: React.FC<{ blog: TypeBlog }> = ({ blog }) => {
   const { setBlog } = useBlogContext();
-  if (!blog) notFound();
   const { slug, title, createdAt, stats, tag, thumbnail } = blog;
   return (
-    <Link href={`/blog/${slug}`} onClick={() => setBlog(blog)}>
+    <Link href={`/blog/${slug}`} title={title} onClick={() => setBlog(blog)}>
       <Card className="group transition-all overflow-hidden hover:border-foreground/50 bg-card w-full h-full relative">
         <AspectRatio ratio={16 / 9} className="relative">
           <Image
             src={thumbnail}
             alt="thumbnail"
             fill
-            className="rounded-md object-cover -z-0"
+            className="object-cover -z-0"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <div className="absolute bottom-2 right-2 flex gap-2 h-6">

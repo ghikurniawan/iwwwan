@@ -17,7 +17,9 @@ const getAllBlogPostAction = async (take = 10) => {
         include: {
             author: {
                 select: {
-                    username: true
+                    username: true,
+                    name: true,
+                    image: true
                 }
             },
             stats: true,
@@ -40,7 +42,9 @@ const getBlogPostBySlugAction = async (slug: string) => {
         include: {
             author: {
                 select: {
-                    username: true
+                    username: true,
+                    name: true,
+                    image: true
                 }
             },
             stats: true,
@@ -66,9 +70,36 @@ const getAllSlug = async () => {
     return res
 }
 
+
+const statViewAction = async (slug: string) => {
+    const { views } = await prisma.stats.findFirst({
+        where: {
+            slug
+        },
+        select: {
+            views: true
+        }
+    })
+
+    await prisma.stats.update({
+        where: {
+            slug
+        },
+        data: {
+            views: views + 1
+        },
+        select: {
+            views: true
+        }
+    })
+}
+
 export {
     getServerSessionAction,
     getAllBlogPostAction,
     getBlogPostBySlugAction,
-    getAllSlug
+    getAllSlug,
+    statViewAction
 };
+
+

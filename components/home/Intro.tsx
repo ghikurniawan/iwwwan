@@ -28,6 +28,8 @@ const Intro: FC<{ blogs: TypeBlog[] }> = ({ blogs }) => {
             variant={"ghost"}
             size="icon"
             className="hover:bg-transparent animate-bounce"
+            type="button"
+            aria-label="go to intro"
           >
             <ArrowDownIcon className="w-12 h-12 hover:text-accent-pink" />
           </Button>

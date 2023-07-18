@@ -19,7 +19,7 @@ export declare type TypeBlog = {
   updatedAt: Date;
   published: boolean;
   authorId: string;
-  author: { username: string };
+  author: { username: string, name: string, image: string };
   stats: { slug: string; likes: number; views: number };
   tag: { tagName: string }[];
 }

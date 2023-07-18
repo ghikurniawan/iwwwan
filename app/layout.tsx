@@ -12,11 +12,39 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
   title: {
     default: "Iwwwan",
     template: "%s | Iwwwan",
   },
   description: "Iwwwan site",
+  openGraph: {
+    title: "Iwwwan",
+    description: "Developer, Graphic Designer, writer, and creator.",
+    url: process.env.NEXT_PUBLIC_BASE_URL,
+    siteName: "Iwwwan",
+    locale: "en-US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: "Iwwwan",
+    card: "summary_large_image",
+  },
+  // verification: {
+  //   google: "eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw",
+  //   yandex: "14d2e73487fa6c71",
+  // },
 };
 
 export default async function RootLayout({
