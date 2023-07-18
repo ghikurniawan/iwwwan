@@ -30,6 +30,8 @@ const BlogContext = createContext<BlogContextType>({
     authorId: "",
     author: {
       username: "",
+      image: "",
+      name: "",
     },
     stats: {
       slug: "",
