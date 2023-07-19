@@ -95,19 +95,6 @@ const statViewAction = async (slug: string) => {
     })
 }
 
-//   id        String @id @default (cuid())
-//   title     String
-//   content   Json ?
-//   slug      String @unique
-//   stats     Stats @relation(fields: [slug], references: [slug])
-//   thumbnail String ?
-//   createdAt DateTime @default (now())
-//   updatedAt DateTime @updatedAt
-//   published Boolean @default (false)
-//   authorId  String
-//   author    User @relation(fields: [authorId], references: [id])
-//   tag       Tag[]
-
 export type CreateBlog = {
     title: string;
     content: Prisma.JsonValue;
@@ -132,7 +119,7 @@ const createBlogAction = async ({
             data: {
                 title,
                 thumbnail,
-                content: content,
+                content,
                 stats: {
                     create: {
                         slug
@@ -144,9 +131,10 @@ const createBlogAction = async ({
                     }
                 },
                 tag: {
-                    createMany: {
-                        data: tag.map((item) => ({ tagName: item }))
-                    }
+                    connectOrCreate: tag.map((item) => ({
+                        where: { tagName: item },
+                        create: { tagName: item }
+                    }))
                 },
                 published: publish
             }
@@ -158,13 +146,21 @@ const createBlogAction = async ({
     }
 }
 
+const getAllTag = async (take = 7) => {
+    const res = await prisma.tag.findMany({
+        take
+    })
+    return res
+}
+
 export {
     getServerSessionAction,
     getAllBlogPostAction,
     getBlogPostBySlugAction,
     getAllSlug,
     statViewAction,
-    createBlogAction
+    createBlogAction,
+    getAllTag
 };
 
 

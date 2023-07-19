@@ -55,7 +55,7 @@ const Banner: FC<{ slug: string; thumbnail: string }> = async ({
   slug,
   thumbnail,
 }) => {
-  const delay = await getDelay(1500);
+  const delay = await getDelay(500);
   return (
     delay && (
       <Image
@@ -130,7 +130,7 @@ const Content = async ({ slug }) => {
                 </Badge>
               </div>
             </div>
-            <div>right</div>
+            <div></div>
           </div>
         </div>
       </div>

@@ -1,16 +1,17 @@
 "use client";
 
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { Group, InputGroup, Label } from "@/components/ui/input-group";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const TagsGenerator = () => {
   return (
-    <div className="p-6">
-      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-500 text-white">
-        Badge
-        <button className="ml-2 focus:outline-none">
-          <Cross1Icon />
-        </button>
-      </span>
+    <div className="max-w-sm">
+      <Group>
+        <Label htmlFor="input-goup">
+          <ReloadIcon className="h-4 w-4 animate-spin" />
+        </Label>
+        <InputGroup id="input-goup" type="text" />
+      </Group>
     </div>
   );
 };

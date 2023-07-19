@@ -73,7 +73,7 @@ model Blog {
   title     String
   content   Json?
   slug      String   @unique
-  stats     Stats    @relation(fields: [slug], references: [slug])
+  stats     Stats    @relation(fields: [slug], references: [slug], onDelete: Cascade)
   thumbnail String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,14 +90,11 @@ model Stats {
   slug  String @id @db.VarChar(128)
   likes Int    @default(0)
   views Int    @default(0)
-  Blog  Blog[]
+  blog  Blog[]
 }
 
 model Tag {
-  id      String  @id @default(cuid())
-  tagName String  @unique
-  Blog    Blog?   @relation(fields: [blogId], references: [id])
-  blogId  String?
-
-  @@index([blogId])
+  id      String @id @default(cuid())
+  tagName String @unique
+  blog    Blog[]
 }

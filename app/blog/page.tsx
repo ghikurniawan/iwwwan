@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent } from "@/components/ui/card";
 import { getDelay } from "@/lib/getDelai";
+import { getAllTag } from "../_actions";
 
 export const dynamic = "force-dynamic";
 
@@ -71,7 +72,7 @@ export default async function Blog() {
 }
 
 const Heading = async () => {
-  const delay = await getDelay(1500);
+  const delay = await getDelay(500);
   return (
     delay && (
       <h2 className="text-7xl mt-4 h-24 leading-normal font-bold text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-purple-500 to-cyan-600">
@@ -107,14 +108,14 @@ const SearchBox = async () => {
 };
 
 const Tags = async () => {
-  const delay = await getDelay(2000);
+  const tes = await getAllTag(7);
   return (
-    delay && (
+    tes && (
       <div className="flex flex-wrap gap-2 ml-2">
         <p className="block">Choose topic:</p>
-        {[1, 2, 3, 4, 5, 6, 7].map((tag) => (
-          <Badge key={tag} variant={"secondary"}>
-            Tag{tag}
+        {tes.map((tag) => (
+          <Badge key={tag.tagName} variant={"secondary"}>
+            {tag.tagName}
           </Badge>
         ))}
       </div>
