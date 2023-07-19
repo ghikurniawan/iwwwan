@@ -2,7 +2,13 @@
 
 import { Editor } from "@tiptap/react";
 import React, { Suspense, lazy, useEffect, useState, useRef, FC } from "react";
-import { Cross1Icon } from "@radix-ui/react-icons";
+import {
+  Cross1Icon,
+  UpdateIcon,
+  ReloadIcon,
+  CheckIcon,
+  CircleIcon,
+} from "@radix-ui/react-icons";
 import {
   Menubar,
   MenubarContent,
@@ -20,15 +26,15 @@ import {
 } from "@/components/ui/menubar";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { ReloadIcon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
-import { CreateBlog } from "../_actions";
+import { CreateBlog, createBlogAction } from "../_actions";
 import { separateTextToArray } from "@/lib/spareteTextToArray";
 import { useDebouncedCallback } from "use-debounce";
 import { isValidImage } from "@/lib/isValidImage";
 import { toast } from "sonner";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Group, InputGroup, Label } from "@/components/ui/input-group";
 
 const NovelEditor = lazy(() => import("@/components/editor"));
 
@@ -52,24 +58,35 @@ export default function EditorPage() {
   const [canEdit, setCanEdit] = useState(true);
   const [manualSlug, setMalualSlug] = useState(false);
   const [validImage, setValidImage] = useState(false);
+  const [statusImage, setStatusImage] = useState(false);
+
   useEffect(() => {
     editor?.setEditable(canEdit);
   }, [editor, canEdit]);
 
   const debouncedUpdatesImage = useDebouncedCallback(async () => {
+    if (defaultMetadata.thumbnail === "") return;
     const valid = await isValidImage(defaultMetadata.thumbnail);
     if (valid) {
-      toast.success("Valid image");
       setValidImage(true);
+      setStatusImage(false);
     } else {
-      toast.error("Image not valid");
+      toast.error("Invalid image URL.");
       setValidImage(valid);
       setDefaultMetadata({
         ...defaultMetadata,
         thumbnail: "",
       });
+      setStatusImage(false);
     }
-  }, 2000);
+  }, 3000);
+
+  useEffect(() => {
+    if (defaultMetadata.thumbnail !== "") {
+      setStatusImage(true);
+      debouncedUpdatesImage();
+    }
+  }, [debouncedUpdatesImage, defaultMetadata.thumbnail]);
 
   const handlePublish = async () => {
     const data: CreateBlog = {
@@ -78,8 +95,15 @@ export default function EditorPage() {
       authorId: sessionData?.user.id,
       publish: true,
     };
-    console.log(data);
-    // await createBlogAction(data);
+    const string = JSON.stringify(data);
+    const parse = JSON.parse(string);
+    const publish = await createBlogAction(parse);
+    if (publish) {
+      toast.success("Post Created");
+      setDefaultMetadata(DEFAULT_METADATA);
+    } else {
+      toast.error("Someting went wrong");
+    }
   };
 
   const handleTitleUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +118,7 @@ export default function EditorPage() {
   const handleTagsUpdate = (tags: string[]) => {
     setDefaultMetadata({
       ...defaultMetadata,
-      tag: tags,
+      tag: [...new Set(tags)],
     });
   };
 
@@ -106,6 +130,7 @@ export default function EditorPage() {
     });
   };
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatusImage(true);
     setDefaultMetadata({
       ...defaultMetadata,
       thumbnail: e.target.value,
@@ -130,16 +155,17 @@ export default function EditorPage() {
               Please wait
             </Button>
           )}
-          {status === "unauthenticated" && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setCanEdit(!canEdit)}
-            >
-              {canEdit ? "Editable" : "Read only"}
-            </Button>
-          )}
-          {status === "authenticated" && (
+          {status === "unauthenticated" ||
+            (sessionData?.user.role === "user" && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCanEdit(!canEdit)}
+              >
+                {canEdit ? "Editable" : "Read only"}
+              </Button>
+            ))}
+          {status === "authenticated" && sessionData?.user.role !== "user" && (
             <Menubar>
               <MenubarMenu>
                 <MenubarTrigger>File</MenubarTrigger>
@@ -193,31 +219,57 @@ export default function EditorPage() {
             {saveStatus}
           </div>
         </div>
-        <div className=" w-full bg-card border p-2 space-y-2">
-          <Input
-            type="text"
-            onChange={handleTitleUpdate}
-            value={defaultMetadata?.title}
-            placeholder="Title"
-          />
-          <Input
-            value={defaultMetadata?.slug}
-            onChange={handleSlugChange}
-            type="text"
-            placeholder="Slug"
-          />
-          <Input
-            onChange={handleThumbnailChange}
-            value={defaultMetadata?.thumbnail}
-            type="text"
-            placeholder="Place link image here.."
-          />
-          <TagsInput
-            defaultTags={defaultMetadata?.tag}
-            onTagsUpdate={handleTagsUpdate}
-          />
-          <span className="text-xs ml-2 text-muted-foreground">Max 3 tags</span>
-        </div>
+        {canEdit && (
+          <div className=" w-full bg-card border p-2 space-y-2">
+            <Input
+              id="title"
+              type="text"
+              onChange={handleTitleUpdate}
+              value={defaultMetadata?.title}
+              placeholder="Title"
+            />
+            <span className="text-xs ml-2 text-muted-foreground">
+              Max 60 Character
+            </span>
+            <Input
+              value={defaultMetadata?.slug}
+              onChange={handleSlugChange}
+              type="text"
+              placeholder="Slug"
+            />
+            <span className="text-xs ml-2 text-muted-foreground">
+              Automatic slug or edit manual
+            </span>
+            <Group>
+              <Label htmlFor="input-goup">
+                {statusImage ? (
+                  <UpdateIcon className="h-4 w-4 animate-spin" />
+                ) : validImage ? (
+                  <CheckIcon className="h-4 w-4 text-green-400" />
+                ) : (
+                  <CircleIcon className="h-4 w-4" />
+                )}
+              </Label>
+              <InputGroup
+                onChange={handleThumbnailChange}
+                value={defaultMetadata?.thumbnail}
+                placeholder="Place link thumbnail here.."
+                id="input-goup"
+                type="text"
+              />
+            </Group>
+            <span className="text-xs ml-2 text-muted-foreground">
+              Must valid link image
+            </span>
+            <TagsInput
+              defaultTags={defaultMetadata?.tag}
+              onTagsUpdate={handleTagsUpdate}
+            />
+            <span className="text-xs ml-2 text-muted-foreground">
+              Max 3 tags
+            </span>
+          </div>
+        )}
         {defaultMetadata.thumbnail && validImage && (
           <AspectRatio ratio={21 / 9} className="relative">
             <Suspense
@@ -259,7 +311,7 @@ const TagsInput: FC<{
   onTagsUpdate: (arg: string[]) => void;
 }> = ({ onTagsUpdate, defaultTags }) => {
   const [tagInput, setTagInput] = useState("");
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleFocus = () => {
     inputRef.current.focus(); // Focus the input when the div is clicked
   };
@@ -273,6 +325,16 @@ const TagsInput: FC<{
       const newTag = separateTextToArray(tagInput);
       onTagsUpdate && onTagsUpdate([...defaultTags, ...newTag]);
       setTagInput("");
+    }
+  };
+
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData("text");
+    if (pastedText.trim() !== "") {
+      const newTag = separateTextToArray(pastedText);
+      onTagsUpdate && onTagsUpdate([...defaultTags, ...newTag]);
+      inputRef.current.value = "";
     }
   };
 
@@ -304,8 +366,9 @@ const TagsInput: FC<{
         ref={inputRef}
         value={tagInput}
         onChange={handleTagInput}
+        onPaste={handlePaste}
         placeholder="Enter tags here"
-        className=" w-auto min-w-fit border-none focus-visible:ring-0"
+        className="w-full min-w-fit border-none focus-visible:ring-0"
         onKeyDown={(e) => e.key === "Enter" && handleAddTag()}
       />
     </div>

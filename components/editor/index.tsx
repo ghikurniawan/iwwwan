@@ -160,6 +160,7 @@ export default function NovelEditor({
 
   return (
     <ScrollArea
+      scrollHideDelay={300}
       onClick={() => {
         editable && editor?.chain().focus().run();
       }}
